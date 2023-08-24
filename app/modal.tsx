@@ -1,19 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/HomeSearch/HomeSearch';
 import { Text, View } from '@/components/Themed';
+import { DynamicView } from '@/types/enum';
+import AuthView from '@/components/AuthView/AuthView';
+import {
+  Platform,
+  Button,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  useColorScheme,
+} from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import LogoutView from '@/components/LogoutView/LogoutView';
 
 export default function ModalScreen() {
+  const route = useRoute();
+  const { viewType, logoutLink } = route.params as any;
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" />
+    <SafeAreaView style={{ flex: 1, padding: 10 }}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <View style={styles.container}>
+          {viewType == DynamicView.AUTH_VIEW && <AuthView />}
+          {viewType == DynamicView.LOGOUT_VIEW && (
+            <LogoutView logoutLink={logoutLink} />
+          )}
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View>
+          {/* Use a light status bar on iOS to account for the black space above the modal */}
+          <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
