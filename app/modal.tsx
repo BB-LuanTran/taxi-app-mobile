@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import LogoutView from '@/components/LogoutView/LogoutView';
+import SearchResult from '@/components/SearchResult/SearchResult';
 
 export default function ModalScreen() {
   const route = useRoute();
@@ -25,6 +26,7 @@ export default function ModalScreen() {
           {viewType == DynamicView.LOGOUT_VIEW && (
             <LogoutView logoutLink={logoutLink} />
           )}
+          {viewType == DynamicView.SEARCHRESULT_VIEW && <SearchResult />}
 
           {/* Use a light status bar on iOS to account for the black space above the modal */}
           <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />

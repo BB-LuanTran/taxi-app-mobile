@@ -32,30 +32,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="one"
+        name="TestSocketTab"
         options={{
-          title: 'Tab One',
+          title: 'Test socket',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="DestinationSearchTab"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="three"
-        options={{
-          title: 'Tab Three',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="four"
-        options={{
-          title: 'Tab Four',
+          title: 'Where to?',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

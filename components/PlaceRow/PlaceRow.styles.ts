@@ -4,17 +4,13 @@ var viewWidth = Dimensions.get('window').width; //full width
 var viewHeight = Dimensions.get('window').height; //full height
 
 const styles = StyleSheet.create({
-  searchResultContainer: {
+  placeRowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
     padding: 10,
     minWidth: '100%',
     maxWidth: '100%',
-    height: viewHeight - 80,
-  },
-  mapContainer: {
-    height: '70%',
-  },
-  driverTypeContainer: {
-    height: '30%',
   },
 });
 
