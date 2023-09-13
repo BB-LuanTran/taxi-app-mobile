@@ -3,8 +3,9 @@ import { StyleSheet, useColorScheme, StatusBar, Button } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import { useNavigation, useRouter } from 'expo-router';
-import { checkUser, logout } from '@/api';
+import { checkUser, logout, updateUser } from '@/api';
 import { User } from '@/types';
+import { TextInput } from 'react-native-gesture-handler';
 
 export default function TabIndexScreen() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -15,6 +16,7 @@ export default function TabIndexScreen() {
   };
 
   const [user, setUser] = useState<User | undefined>();
+  const [updatedUser, setUpdatedUser] = useState<User | undefined>();
 
   useEffect(() => {
     const getUser = async () => {
@@ -35,6 +37,11 @@ export default function TabIndexScreen() {
     router.push('/modal?viewType=AUTH_VIEW');
   };
 
+  const handleUpdate = async (id: string, updatedUser: User) => {
+    const data = await updateUser(id, updatedUser);
+    setUser(data);
+  };
+
   const handleLogout = async () => {
     const logoutLink = await logout();
     router.push(`/modal?viewType=LOGOUT_VIEW&logoutLink=${logoutLink}`);
@@ -48,8 +55,39 @@ export default function TabIndexScreen() {
         <View>
           <Text>Name: {user.displayName}</Text>
           <Text>Email: {user.email}</Text>
-          <Text>Phone number: {user.phoneNumber}</Text>
-          <Button title="Login out" onPress={handleLogout} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>Phone number: {user.phoneNumber}</Text>
+            {!user.phoneNumber && (
+              <TextInput
+                placeholder="Enter your phone number"
+                onChangeText={(text) => {
+                  const _updateUser: User = { ...user, phoneNumber: text };
+                  setUpdatedUser(_updateUser);
+                }}
+              />
+            )}
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>Address: {user.address}</Text>
+            {!user.address && (
+              <TextInput
+                placeholder="Enter your address"
+                onChangeText={(text) => {
+                  const _updateUser: User = { ...user, address: text };
+                  setUpdatedUser(_updateUser);
+                }}
+              />
+            )}
+          </View>
+          {(!user.address || !user.phoneNumber) && (
+            <Button
+              title="Update user infomation"
+              onPress={() => {
+                if (updatedUser) handleUpdate(user.id, updatedUser);
+              }}
+            />
+          )}
+          <Button color={'red'} title="Login out" onPress={handleLogout} />
         </View>
       )}
       <StatusBar

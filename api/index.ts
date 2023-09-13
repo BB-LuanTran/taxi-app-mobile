@@ -17,6 +17,16 @@ export const logout = async (): Promise<User> => {
   return response.data;
 };
 
+export const updateUser = async (
+  id: string,
+  updatedUser: User,
+): Promise<User> => {
+  const response = await axios.put<User>(`/v1/azureUsers/${id}`, {
+    ...updatedUser,
+  });
+  return response.data;
+};
+
 export const reverseGeocoding = async (latitude: number, longitude: number) => {
   const response = await axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleMapApiKey}`,

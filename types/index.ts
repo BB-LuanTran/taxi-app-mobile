@@ -1,7 +1,7 @@
 import {
   GooglePlaceData,
   GooglePlaceDetail,
-} from "react-native-google-places-autocomplete";
+} from 'react-native-google-places-autocomplete';
 
 export type GoogleData = {
   data: GooglePlaceData;
@@ -33,5 +33,6 @@ export type User = {
   active: boolean;
   azureOid: string;
   phoneNumber: string;
+  address: string;
   displayName: string;
 };
