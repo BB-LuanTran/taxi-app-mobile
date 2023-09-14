@@ -23,6 +23,7 @@ export default function TabIndexScreen() {
       try {
         const data = await checkUser();
         setUser(data);
+        setUpdatedUser(data);
       } catch (error) {
         setUser(undefined);
       }
@@ -39,6 +40,7 @@ export default function TabIndexScreen() {
 
   const handleUpdate = async (id: string, updatedUser: User) => {
     const data = await updateUser(id, updatedUser);
+    setUser(undefined);
     setUser(data);
   };
 
@@ -61,8 +63,13 @@ export default function TabIndexScreen() {
               <TextInput
                 placeholder="Enter your phone number"
                 onChangeText={(text) => {
-                  const _updateUser: User = { ...user, phoneNumber: text };
-                  setUpdatedUser(_updateUser);
+                  if (updatedUser) {
+                    const _updateUser: User = {
+                      ...updatedUser,
+                      phoneNumber: text,
+                    };
+                    setUpdatedUser(_updateUser);
+                  }
                 }}
               />
             )}
@@ -73,8 +80,10 @@ export default function TabIndexScreen() {
               <TextInput
                 placeholder="Enter your address"
                 onChangeText={(text) => {
-                  const _updateUser: User = { ...user, address: text };
-                  setUpdatedUser(_updateUser);
+                  if (updatedUser) {
+                    const _updateUser: User = { ...updatedUser, address: text };
+                    setUpdatedUser(_updateUser);
+                  }
                 }}
               />
             )}
